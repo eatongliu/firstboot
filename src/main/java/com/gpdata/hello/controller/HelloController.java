@@ -28,7 +28,7 @@ public class HelloController {
         return "现在时间：" + new Date();
     }
 
-    @RequestMapping("/user")
+    @RequestMapping("/one/list")
     public BeanResult getOne(){
         List<User> all = userDao.findAll();
         return BeanResult.success(all);
