@@ -75,4 +75,8 @@ public class SimpleTest {
         }
         System.out.println("每月花费为：" + sum);
     }
+    @Test
+    public void test111() {
+        System.out.println("测试git操作");
+    }
 }
