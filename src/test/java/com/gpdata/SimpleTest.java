@@ -1,5 +1,6 @@
 package com.gpdata;
 
+import com.alibaba.fastjson.JSONObject;
 import org.junit.Test;
 
 import java.util.Calendar;
@@ -50,5 +51,32 @@ public class SimpleTest {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.MONTH, i - 1);
         return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+    }
+
+    @Test
+    public void test2() {
+        System.out.println(15 >> 1);
+    }
+
+    @Test
+    public void testCard() {
+        double price = 5.0;
+        double sum = 0.0;
+        for (int i = 0; i < 44; i++) {
+            double temp = price;
+            if (sum > 150) {
+                System.out.println("额度超过150，次数为：" + (i+1));
+                temp = price * 0.5;
+            }else if (sum > 100) {
+                System.out.println("额度超过100，次数为：" + (i+1));
+                temp = price * 0.8;
+            }
+            sum += temp;
+        }
+        System.out.println("每月花费为：" + sum);
+    }
+    @Test
+    public void test111() {
+        System.out.println("测试git操作");
     }
 }
