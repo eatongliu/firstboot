@@ -2,11 +2,15 @@ package com.gpdata.user;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Created by liuyutong on 2017/12/1.
@@ -15,8 +19,21 @@ import java.util.Map;
 public class UserController {
 
     @RequestMapping("/user")
-    public String getUser(Map<String, Object> map) {
-        map.put("description", "这是一个测试哟！");
+    public String getUser(Map<String, Object> map, HttpServletRequest request) {
+        String value = "123456";
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null && cookies.length > 0) {
+            for (int i = 0; i < cookies.length; i++) {
+                Cookie cookie = cookies[i];
+                String name = cookie.getName();
+                if (Objects.equals("cookieTest", name)) {
+                    value = cookie.getValue();
+                    break;
+                }
+            }
+        }
+        System.out.println(value);
+        map.put("description", value);
         return "user";
     }
 
@@ -46,4 +63,28 @@ public class UserController {
         }
         return "subscribe";
     }
+
+    @RequestMapping("/wx/login")
+    public String login (HttpServletResponse response, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        session.setAttribute("sessionTest", "!@#$%^&*()_+");
+
+        Cookie cookie = new Cookie("cookieTest", "abcdefghijklmn");
+        cookie.setMaxAge(10);
+        cookie.setPath("/");
+        response.addCookie(cookie);
+        return "redirect:/user";
+    }
+
+    @RequestMapping("/wx/logout")
+    public String logout (HttpServletResponse response) {
+        //清除Cookies
+        Cookie cookie = new Cookie("cookieTest", "");
+        cookie.setMaxAge(0);
+        cookie.setPath("/");
+        response.addCookie(cookie);
+        return "redirect:/user";
+    }
+
+
 }

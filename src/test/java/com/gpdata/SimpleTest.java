@@ -1,5 +1,6 @@
 package com.gpdata;
 
+import com.alibaba.fastjson.JSONObject;
 import org.junit.Test;
 
 import java.util.Calendar;
@@ -50,5 +51,15 @@ public class SimpleTest {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.MONTH, i - 1);
         return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+    }
+
+    @Test
+    public void testjson() {
+        String json = "{\"weixinLogin\":\"1\",\"weixinBorrow\":null,\"weixinIndexLogin\":\"0\"}";
+        JSONObject jsonObject = JSONObject.parseObject(json);
+        boolean weixinBorrow = jsonObject.containsKey("weixinBorrow");
+        System.out.println(weixinBorrow);
+        String weixinBorrow1 = jsonObject.getString("weixinBorrow");
+        System.out.println(weixinBorrow1);
     }
 }
